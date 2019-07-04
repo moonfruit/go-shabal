@@ -87,7 +87,7 @@ func (s *shabal) Write(b []byte) (n int, err error) {
 }
 
 func (s *shabal) Sum(b []byte) []byte {
-	var ret = make([]byte, s.Size())
+	ret := make([]byte, s.Size())
 	C.shabal_close(s.hashFunc.close, unsafe.Pointer(&s.context), unsafe.Pointer(&ret[0]))
 	return append(b, ret...)
 }
@@ -105,7 +105,7 @@ func (*shabal) BlockSize() int {
 }
 
 func newShabal(size int) hash.Hash {
-	var s = &shabal{size: size, hashFunc: getHashFunc(size)}
+	s := &shabal{size: size, hashFunc: getHashFunc(size)}
 	s.Reset()
 	return s
 }

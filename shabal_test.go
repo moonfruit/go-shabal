@@ -10,10 +10,10 @@ import (
 
 func test(create func() hash.Hash, data, expected string) func(*testing.T) {
 	return func(t *testing.T) {
-		var hasher = create()
+		hasher := create()
 		hasher.Write([]byte(data))
-		var actualBytes = hasher.Sum(nil)
-		var expectedBytes, _ = hex.DecodeString(expected)
+		actualBytes := hasher.Sum(nil)
+		expectedBytes, _ := hex.DecodeString(expected)
 		require.Equal(t, expectedBytes, actualBytes)
 	}
 }
