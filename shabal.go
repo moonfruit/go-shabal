@@ -97,7 +97,7 @@ func (s *shabal) Reset() {
 }
 
 func (s *shabal) Size() int {
-	return s.size / 8
+	return s.size
 }
 
 func (*shabal) BlockSize() int {
@@ -105,7 +105,7 @@ func (*shabal) BlockSize() int {
 }
 
 func newShabal(size int) hash.Hash {
-	s := &shabal{size: size, hashFunc: getHashFunc(size)}
+	s := &shabal{size: size / 8, hashFunc: getHashFunc(size)}
 	s.Reset()
 	return s
 }

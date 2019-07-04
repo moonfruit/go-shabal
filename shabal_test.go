@@ -11,9 +11,20 @@ import (
 func test(create func() hash.Hash, data, expected string) func(*testing.T) {
 	return func(t *testing.T) {
 		hasher := create()
+		expectedBytes, _ := hex.DecodeString(expected)
+
 		hasher.Write([]byte(data))
 		actualBytes := hasher.Sum(nil)
-		expectedBytes, _ := hex.DecodeString(expected)
+		require.Equal(t, expectedBytes, actualBytes)
+
+		hasher.Write([]byte(data))
+		actualBytes = hasher.Sum(nil)
+		require.Equal(t, expectedBytes, actualBytes)
+
+		hasher.Write([]byte(data))
+		hasher.Reset()
+		hasher.Write([]byte(data))
+		actualBytes = hasher.Sum(nil)
 		require.Equal(t, expectedBytes, actualBytes)
 	}
 }
